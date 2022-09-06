@@ -19,7 +19,7 @@ setup(
     author='Daniel',
     author_email="danielglz@mailfence.com",
     license='GPL',
-    install_requires=['gffuilts', 'Bio', 'reportlab'],
+    install_requires=['gffuilts', 'Biopython', 'reportlab', 'matplotlib'],
     #setup_requires=['pytest-runner'],
     #tests_require=['pytest==4.4.1'],
     #test_suite='tests',
