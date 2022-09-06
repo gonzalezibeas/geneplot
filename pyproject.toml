@@ -1,6 +1,6 @@
 [build-system]
-requires = ["flit_core >=3.2,<4", 'gffuilts', 'Biopython', 'reportlab', 'matplotlib']
-build-backend = "flit_core.buildapi"
+requires = ['setuptools', 'gffuilts', 'Biopython', 'reportlab', 'matplotlib']
+build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "geneplot"
