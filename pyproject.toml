@@ -1,0 +1,7 @@
+[build-system]
+requires = ['gffuilts', 'Biopython', 'reportlab', 'matplotlib']
+
+[project]
+name = "geneplot"
+authors = [{name = "Daniel", email = "danielglz@mailfence.com"}]
+dynamic = ["version", "description"]
