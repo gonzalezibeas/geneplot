@@ -9,7 +9,7 @@ long_description = f.read()
 setup(
     name='geneplot',
     #packages=find_packages(include=['geneplot']),
-    packages=["geneplot"],
+    #packages=["geneplot"],
     include_package_data=True,
     version='1.0',
     description='Plot gene intron/exon topology, protein domains and SNPs',
