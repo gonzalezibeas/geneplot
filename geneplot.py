@@ -2,7 +2,6 @@
 
 
 import os
-import gffutils
 import subprocess
 from reportlab.lib import colors
 from reportlab.lib.units import cm
