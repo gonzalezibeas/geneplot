@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geneplot module &mdash; geneplot 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="docs" href="modules.html" />
+    <link rel="prev" title="Welcome to geneplot’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> geneplot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">geneplot module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">docs</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">geneplot module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">geneplot tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html#example-1">Example 1.</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">geneplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>geneplot module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/geneplot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geneplot">
+<span id="geneplot-module"></span><h1>geneplot module<a class="headerlink" href="#module-geneplot" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="geneplot.genome">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">geneplot.</span></span><span class="sig-name descname"><span class="pre">genome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gff3file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iprfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vcffiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geneplot.html#genome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geneplot.genome" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Instantiates a genome object with genome-associated as paths pointing to the
+data source and set as class attributes. Data include the GFF3 file of 
+genome annotation (positional), InterproScan output of protein domains 
+identified on protein-coding genes (keyword), and directory with VCF files 
+of polymorphisms (keyword).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gff3file</strong> (<em>str</em>) – path to the GFF3 file</p></li>
+<li><p><strong>iprfile</strong> (<em>str</em>) – path to the InterproScan’s output file</p></li>
+<li><p><strong>vcffiles</strong> (<em>str</em>) – path to the VCF files directory</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="geneplot.genome.gene">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mRNAid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proteinid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iprfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geneplot.html#genome.gene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geneplot.genome.gene" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Instantiates a gene object with the method plot() to represent the 
+intron/exon structure of the gene from a GFF3 file, the protein domain 
+topology from InterproScan’s output, and single nucleotide 
+polymofphisms (SNPs) from VCF files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mRNAid</strong> (<em>str</em>) – gene identifier (ID) according to the GFF3 file annotations.</p></li>
+<li><p><strong>proteinid</strong> (<em>str</em>) – protein identifier (ID) from the InterproScan output</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – user-defined description of the gene</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geneplot.genome.gene.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Pfam'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">onlycoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geneplot.html#genome.gene.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geneplot.genome.gene.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Plots features of the gene ID (class object) previously generated
+by the functions of the class, including exon and UTR features
+(the latter only if present in the GFF3 file), Interpro protein
+domains and SNPs. SNP data are labelled with the genotype according
+to the VCF file information, and colored based on SNPEff impact,
+i.e. LOW: green, MODERATE: amber, MODIFIER: pink, HIGH: red.
+A PNG image is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domtype</strong> (<em>str</em>) – protein domain type (as specified in the InterproScan output)
+to be plotted (Pfam by default).</p></li>
+<li><p><strong>sp</strong> (<em>str</em>) – Species ID to select SNP data from the VCF file.</p></li>
+<li><p><strong>onlycoding</strong> (<em>boolean</em>) – to plot only SNPs located on coding areas of the gene</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to geneplot’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="docs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Daniel Gonzalez-Ibeas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

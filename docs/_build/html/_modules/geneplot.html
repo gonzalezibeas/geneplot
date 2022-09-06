@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geneplot &mdash; geneplot 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> geneplot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../source/geneplot.html">geneplot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/modules.html">docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html">geneplot tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html#example-1">Example 1.</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">geneplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>geneplot</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geneplot</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">gffutils</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">reportlab.lib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">reportlab.lib.units</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">reportlab.lib.colors</span> <span class="kn">import</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">Bio.Graphics</span> <span class="kn">import</span> <span class="n">GenomeDiagram</span>
+<span class="kn">from</span> <span class="nn">Bio.SeqFeature</span> <span class="kn">import</span> <span class="n">SeqFeature</span><span class="p">,</span> <span class="n">FeatureLocation</span>
+<span class="kn">from</span> <span class="nn">Bio.Graphics.GenomeDiagram</span> <span class="kn">import</span> <span class="n">CrossLink</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">pl</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logfile</span> <span class="o">=</span> <span class="s1">&#39;geneplot.all.err.log&#39;</span>
+<span class="n">galllog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">);</span> <span class="n">galllog</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">logfile</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">filemode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(name)s</span><span class="s1">  </span><span class="si">%(funcName)s</span><span class="s1">  </span><span class="si">%(module)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;module initialized...&#39;</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+
+<div class="viewcode-block" id="genome"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome">[docs]</a><span class="k">class</span> <span class="nc">genome</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Instantiates a genome object with genome-associated as paths pointing to the</span>
+<span class="sd">    data source and set as class attributes. Data include the GFF3 file of </span>
+<span class="sd">    genome annotation (positional), InterproScan output of protein domains </span>
+<span class="sd">    identified on protein-coding genes (keyword), and directory with VCF files </span>
+<span class="sd">    of polymorphisms (keyword).</span>
+<span class="sd">    </span>
+<span class="sd">    :param gff3file: path to the GFF3 file</span>
+<span class="sd">    :type gff3file: str</span>
+<span class="sd">    :param iprfile: path to the InterproScan&#39;s output file</span>
+<span class="sd">    :type iprfile: str</span>
+<span class="sd">    :param vcffiles: path to the VCF files directory</span>
+<span class="sd">    :type vcffiles: str</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+    <span class="n">_snpimpact</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;LOW&#39;</span><span class="p">:</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">50</span><span class="o">/</span><span class="mi">255</span><span class="p">),</span> <span class="s1">&#39;MODERATE&#39;</span><span class="p">:</span><span class="n">Color</span><span class="p">(</span><span class="mi">204</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">153</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="o">/</span><span class="mi">255</span><span class="p">),</span>
+                 <span class="s1">&#39;MODIFIER&#39;</span><span class="p">:</span><span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="o">/</span><span class="mi">255</span><span class="p">),</span>
+                 <span class="s1">&#39;HIGH&#39;</span><span class="p">:</span><span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;NOANN&#39;</span><span class="p">:</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)}</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gff3file</span><span class="p">,</span> <span class="n">iprfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vcffiles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing genome class...&#39;</span><span class="p">)</span>
+        <span class="n">genome</span><span class="o">.</span><span class="n">gff3file</span> <span class="o">=</span> <span class="n">gff3file</span>
+        <span class="n">genome</span><span class="o">.</span><span class="n">iprfile</span> <span class="o">=</span> <span class="n">iprfile</span>
+        <span class="n">genome</span><span class="o">.</span><span class="n">vcffiles</span> <span class="o">=</span> <span class="n">vcffiles</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; genome class initialized&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="genome.gene"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene">[docs]</a>    <span class="k">class</span> <span class="nc">gene</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Instantiates a gene object with the method plot() to represent the </span>
+<span class="sd">        intron/exon structure of the gene from a GFF3 file, the protein domain </span>
+<span class="sd">        topology from InterproScan&#39;s output, and single nucleotide </span>
+<span class="sd">        polymofphisms (SNPs) from VCF files.</span>
+
+<span class="sd">        :param mRNAid: gene identifier (ID) according to the GFF3 file annotations.</span>
+<span class="sd">        :type mRNAid: str</span>
+<span class="sd">        :param proteinid: protein identifier (ID) from the InterproScan output</span>
+<span class="sd">        :type proteinid: str</span>
+<span class="sd">        :param description: user-defined description of the gene</span>
+<span class="sd">        :type description: str</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mRNAid</span><span class="p">,</span> <span class="n">proteinid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iprfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing gene class...&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">mRNAid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinid</span> <span class="o">=</span> <span class="n">proteinid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gff3file</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">gff3file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iprfile</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">iprfile</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vcffiles</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">vcffiles</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">gffutils</span><span class="o">.</span><span class="n">FeatureDB</span><span class="p">(</span><span class="n">genome</span><span class="o">.</span><span class="n">gff3file</span> <span class="o">+</span> <span class="s1">&#39;.db&#39;</span><span class="p">,</span> <span class="n">keep_order</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span> <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+
+            <span class="k">assert</span> <span class="n">db</span><span class="p">[</span><span class="n">mRNAid</span><span class="p">]</span><span class="o">.</span><span class="n">featuretype</span> <span class="o">==</span> <span class="s1">&#39;mRNA&#39;</span><span class="p">,</span> <span class="s1">&#39;only mRNA features are supported for </span><span class="se">\</span>
+<span class="s1">                                                this version of the library&#39;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">chrom</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="n">mRNAid</span><span class="p">]</span><span class="o">.</span><span class="n">chrom</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="n">mRNAid</span><span class="p">]</span><span class="o">.</span><span class="n">start</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="n">mRNAid</span><span class="p">]</span><span class="o">.</span><span class="n">end</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="s1">&#39; gene class initialized&#39;</span><span class="p">)</span>
+
+
+        <span class="k">def</span> <span class="nf">_transcriptpos_to_genomepos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Calculates genome coordinates for every nucleotide position</span>
+<span class="sd">            of the transcript according to the GFF3 and FASTA</span>
+<span class="sd">            files provided as input during the instantiation of the gene class.</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting...&#39;</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mrna</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">coors</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">lencdsaccum</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">cds</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">],</span> <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;CDS&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">):</span>
+                    <span class="n">lencds</span> <span class="o">=</span> <span class="n">cds</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cds</span><span class="o">.</span><span class="n">start</span>
+                    <span class="n">coors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">cds</span><span class="o">.</span><span class="n">end</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+                    <span class="n">lencdsaccum</span> <span class="o">+=</span> <span class="n">lencds</span>
+                <span class="n">coors</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">coors</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">if</span> <span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">strand</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                    <span class="n">coors</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+                <span class="n">dcoors</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lencdsaccum</span><span class="p">):</span>
+                    <span class="n">dcoors</span><span class="p">[</span><span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">coors</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coor</span> <span class="o">=</span> <span class="n">dcoors</span>
+                <span class="k">return</span> <span class="n">dcoors</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+        <span class="k">def</span> <span class="nf">_proteindoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprfile</span><span class="p">,</span> <span class="n">proteinid</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Builds a dictionary from the InterproScan file provided as input of the</span>
+<span class="sd">            class &quot;gene&quot;.</span>
+
+<span class="sd">            :param iprfile: path to the InterproScan&#39;s output file</span>
+<span class="sd">            :type iprfile: str</span>
+<span class="sd">            :param proteinid: protein identifier (ID) from the InterproScan output</span>
+<span class="sd">            :type proteinid: str</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting...&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mrna</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">iprfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">doms</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">proteinid</span><span class="p">:</span>
+                        <span class="n">doms</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">],</span> 
+                                                                      <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">5</span><span class="p">],</span> 
+                                                                      <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">6</span><span class="p">]),</span> 
+                                                                      <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">7</span><span class="p">])))</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="c1">#</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">doms</span><span class="p">),</span> <span class="s1">&#39;domain types found&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doms</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">doms</span> <span class="o">=</span> <span class="n">doms</span>
+                <span class="k">return</span> <span class="n">doms</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+
+        <span class="k">def</span> <span class="nf">_getsnppos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">vcffiles</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Selects SNP data overlapping with genome coordinates</span>
+<span class="sd">            of the gene ID (class object) from a VCF file whose sample ID matches</span>
+<span class="sd">            the &quot;sp&quot; parameter of the function. SNP annotation by</span>
+<span class="sd">            SNPEff is retrieved from the VCF file. If absent, de novo annotation</span>
+<span class="sd">            of selected SNPs is performed.</span>
+
+<span class="sd">            :param sp: Species ID to select SNP data from the VCF file</span>
+<span class="sd">            :type sp: str</span>
+<span class="sd">            :param vcffiles: path to the VCF files directory</span>
+<span class="sd">            :type vcffiles: str</span>
+<span class="sd">            :param onlycoding: to plot only SNPs located on coding areas of the gene</span>
+<span class="sd">            :type onlycoding: boolean</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting...&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mrna</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+                <span class="n">phvcfs</span> <span class="o">=</span> <span class="n">vcffiles</span>
+                <span class="n">galllog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+                <span class="n">fsp</span> <span class="o">=</span> <span class="s1">&#39;file not found&#39;</span>
+                <span class="k">for</span> <span class="n">ffile</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">phvcfs</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">ffile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.vcf&#39;</span><span class="p">):</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">ffile</span><span class="p">)</span>
+                        <span class="n">p0</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;vcf-query -l &#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">phvcfs</span><span class="p">,</span> <span class="n">ffile</span><span class="p">)],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">galllog</span><span class="p">)</span>
+                        <span class="n">sample</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">sp</span> <span class="o">==</span> <span class="n">sample</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;getting SNPs from...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">ffile</span><span class="p">)</span>
+                            <span class="n">fsp</span> <span class="o">=</span> <span class="n">ffile</span>
+
+                <span class="n">dcds</span><span class="p">,</span> <span class="n">varssall</span><span class="p">,</span> <span class="n">dmrna</span><span class="p">,</span> <span class="n">dvarss</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[],</span> <span class="p">{</span><span class="s1">&#39;snps&#39;</span><span class="p">:{},</span> <span class="s1">&#39;posgposp&#39;</span><span class="p">:{}},</span> <span class="p">{}</span>
+                <span class="n">lencdsaccum</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="c1"># SNPs on coding areas</span>
+                <span class="k">if</span> <span class="n">onlycoding</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;plotting only SNPs on coding areas...&#39;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">cds</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">],</span> <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;CDS&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">):</span>
+                        <span class="n">lencds</span> <span class="o">=</span> <span class="n">cds</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cds</span><span class="o">.</span><span class="n">start</span>
+                        <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;vcftools --vcf &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">phvcfs</span><span class="p">,</span> <span class="n">fsp</span><span class="p">)</span> <span class="o">+</span>\
+                                             <span class="s1">&#39; --chr &#39;</span><span class="o">+</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">chrom</span><span class="o">+</span><span class="s1">&#39; --from-bp &#39;</span><span class="o">+</span>\
+                                                <span class="nb">str</span><span class="p">(</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; --to-bp &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">cds</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">+</span>\
+                                             <span class="s1">&#39; --recode --recode-INFO-all --stdout&#39;</span><span class="p">],</span> 
+                                            <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">galllog</span><span class="p">)</span>
+
+                        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">p1</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="k">if</span> <span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                    <span class="n">varssall</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+                                    <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0/1&#39;</span><span class="p">:</span>
+                                        <span class="n">dcds</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">lencdsaccum</span><span class="p">]</span> <span class="o">=</span> \
+                                        <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+                                        <span class="n">dvarss</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                        <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+                                        <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;posgposp&#39;</span><span class="p">][</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                        <span class="nb">int</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">lencdsaccum</span>
+                                    <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1/1&#39;</span><span class="p">:</span>
+                                        <span class="n">dcds</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">lencdsaccum</span><span class="p">]</span> <span class="o">=</span> \
+                                        <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+                                        <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;posgposp&#39;</span><span class="p">][</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                        <span class="nb">int</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">cds</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">lencdsaccum</span>
+                                        <span class="n">dvarss</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                        <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+                        <span class="n">lencdsaccum</span> <span class="o">+=</span> <span class="n">lencds</span>
+
+                <span class="c1"># all SNPs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;vcftools --vcf &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">phvcfs</span><span class="p">,</span> <span class="n">fsp</span><span class="p">)</span> <span class="o">+</span>\
+                                        <span class="s1">&#39; --chr &#39;</span><span class="o">+</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">chrom</span><span class="o">+</span><span class="s1">&#39; --from-bp &#39;</span><span class="o">+</span>\
+                                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; --to-bp &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="o">+</span>\
+                                        <span class="s1">&#39; --recode --recode-INFO-all --stdout&#39;</span><span class="p">],</span> 
+                                        <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">galllog</span><span class="p">)</span>
+
+                    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">p2</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="n">varssall</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0/1&#39;</span><span class="p">:</span>
+                                    <span class="n">dvarss</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                    <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+                                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1/1&#39;</span><span class="p">:</span>
+                                    <span class="n">dvarss</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                                    <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+
+                <span class="n">varssall</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">varssall</span><span class="p">))</span>
+
+                <span class="c1">#</span>
+                <span class="c1"># SNPEff annotation</span>
+                <span class="n">dsnpsann</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">headerann</span> <span class="o">=</span> <span class="s1">&#39;Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | </span><span class="se">\</span>
+<span class="s1">                Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | </span><span class="se">\</span>
+<span class="s1">                cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance |</span><span class="se">\</span>
+<span class="s1">                ERRORS / WARNINGS / INFO&#39;</span>
+                <span class="k">def</span> <span class="nf">getann</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                    <span class="n">dsnpsann</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ANN&#39;</span><span class="p">):</span>
+                                    <span class="n">ann</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+                                    <span class="n">dtmpann</span> <span class="o">=</span> <span class="p">{}</span>
+                                    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">headerann</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))):</span>
+                                        <span class="n">dtmpann</span><span class="p">[</span><span class="n">headerann</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> \
+                                        <span class="n">ann</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span>
+                                    <span class="n">dsnpsann</span><span class="p">[</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])]</span> <span class="o">=</span> <span class="n">dtmpann</span>
+                    <span class="k">return</span> <span class="n">dsnpsann</span>
+                <span class="n">dsnpsann</span> <span class="o">=</span> <span class="n">getann</span><span class="p">(</span><span class="n">varssall</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dsnpsann</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="c1">#</span>
+                <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;len&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lencdsaccum</span>
+                <span class="k">if</span> <span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">strand</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                    <span class="n">dtmp</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dcds</span><span class="p">:</span>
+                        <span class="n">dtmp</span><span class="p">[</span><span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;len&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">item</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcds</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+                <span class="c1">#</span>
+                    <span class="n">dcds</span> <span class="o">=</span> <span class="n">dtmp</span>
+
+                    <span class="n">dtmp</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;posgposp&#39;</span><span class="p">]:</span>
+                        <span class="n">dtmp</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;len&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;posgposp&#39;</span><span class="p">][</span><span class="n">item</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="c1">#</span>
+                    <span class="n">dmrna</span><span class="p">[</span><span class="s1">&#39;posgposp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtmp</span>
+                    <span class="k">del</span><span class="p">(</span><span class="n">dtmp</span><span class="p">)</span>
+                <span class="n">galllog</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dcds</span> <span class="o">=</span> <span class="n">dcds</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">varssall</span> <span class="o">=</span> <span class="n">varssall</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dmrna</span> <span class="o">=</span> <span class="n">dmrna</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dsnpsann</span> <span class="o">=</span> <span class="n">dsnpsann</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dvarss</span> <span class="o">=</span> <span class="n">dvarss</span>
+                <span class="k">return</span> <span class="n">dsnpsann</span><span class="p">,</span> <span class="n">dvarss</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+
+<div class="viewcode-block" id="genome.gene.plot"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene.plot">[docs]</a>        <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domtype</span><span class="o">=</span><span class="s1">&#39;Pfam&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Plots features of the gene ID (class object) previously generated</span>
+<span class="sd">            by the functions of the class, including exon and UTR features</span>
+<span class="sd">            (the latter only if present in the GFF3 file), Interpro protein</span>
+<span class="sd">            domains and SNPs. SNP data are labelled with the genotype according</span>
+<span class="sd">            to the VCF file information, and colored based on SNPEff impact,</span>
+<span class="sd">            i.e. LOW: green, MODERATE: amber, MODIFIER: pink, HIGH: red.</span>
+<span class="sd">            A PNG image is generated.</span>
+
+<span class="sd">            :param domtype: protein domain type (as specified in the InterproScan output)</span>
+<span class="sd">                            to be plotted (Pfam by default).</span>
+<span class="sd">            :type domtype: str</span>
+<span class="sd">            :param sp: Species ID to select SNP data from the VCF file.</span>
+<span class="sd">            :type sp: str</span>
+<span class="sd">            :param onlycoding: to plot only SNPs located on coding areas of the gene</span>
+<span class="sd">            :type onlycoding: boolean</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting...&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mrna</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">dcoors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transcriptpos_to_genomepos</span><span class="p">()</span>
+                <span class="n">doms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proteindoms</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iprfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinid</span><span class="p">)</span> <span class="k">if</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iprfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="k">else</span> <span class="p">{}</span>
+                <span class="n">dsnpsann</span><span class="p">,</span> <span class="n">dvarss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getsnppos</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vcffiles</span><span class="p">,</span> <span class="n">onlycoding</span><span class="p">)</span> <span class="k">if</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">vcffiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">({},</span> <span class="p">{})</span>
+
+                <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+
+                <span class="n">ccolor</span> <span class="o">=</span> <span class="s1">&#39;#c5cc78&#39;</span>
+                <span class="n">gdd</span> <span class="o">=</span> <span class="n">GenomeDiagram</span><span class="o">.</span><span class="n">Diagram</span><span class="p">(</span><span class="s1">&#39;gene&#39;</span><span class="p">)</span>
+                <span class="n">sscale</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">&gt;</span> <span class="mi">40000</span><span class="p">:</span>
+                    <span class="n">sscale</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">gdt_features</span> <span class="o">=</span> <span class="n">gdd</span><span class="o">.</span><span class="n">new_track</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">greytrack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">mrna</span><span class="p">,</span> <span class="n">greytrack_labels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                                             <span class="n">greytrack_font_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+                                             <span class="n">greytrack_fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">greytrack_font_rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+                                             <span class="n">scale</span><span class="o">=</span><span class="n">sscale</span><span class="p">,</span> <span class="n">scale_largetick_interval</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> 
+                                             <span class="n">scale_smalltick_interval</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                                             <span class="n">scale_fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_fontangle</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="n">gds_features</span> <span class="o">=</span> <span class="n">gdt_features</span><span class="o">.</span><span class="n">new_set</span><span class="p">()</span>
+                <span class="c1">#</span>
+                <span class="k">for</span> <span class="n">ft</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">mrna</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s1">&#39;UTR&#39;</span> <span class="ow">in</span> <span class="n">ft</span><span class="o">.</span><span class="n">featuretype</span><span class="p">:</span>
+                        <span class="n">ccolor</span> <span class="o">=</span> <span class="s1">&#39;#a6a6a6&#39;</span>
+                    <span class="n">feature</span> <span class="o">=</span> <span class="n">SeqFeature</span><span class="p">(</span><span class="n">FeatureLocation</span><span class="p">(</span><span class="n">ft</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">ft</span><span class="o">.</span><span class="n">end</span><span class="p">),</span> <span class="n">strand</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">ft</span><span class="o">.</span><span class="n">strand</span><span class="o">+</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
+                    <span class="n">null</span> <span class="o">=</span> <span class="n">gds_features</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">ft</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ccolor</span><span class="p">,</span> 
+                                                    <span class="n">sigil</span><span class="o">=</span><span class="s1">&#39;BIGARROW&#39;</span><span class="p">,</span> <span class="n">label_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                                    <span class="n">arrowshaft_height</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arrowhead_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="c1">#protein domain independent</span>
+                <span class="n">gdt_features</span> <span class="o">=</span> <span class="n">gdd</span><span class="o">.</span><span class="n">new_track</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">greytrack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Dom&#39;</span><span class="p">,</span> <span class="n">greytrack_labels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                                             <span class="n">greytrack_font_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">greytrack_fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> 
+                                             <span class="n">height</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale_largetick_interval</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+                                             <span class="n">scale_smalltick_interval</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="n">gds_features</span> <span class="o">=</span> <span class="n">gdt_features</span><span class="o">.</span><span class="n">new_set</span><span class="p">()</span>
+                <span class="c1">#</span>
+                <span class="n">cmap</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;tab20&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">indx</span><span class="p">,</span><span class="n">dom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doms</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domtype</span><span class="p">,</span> <span class="p">[])):</span>
+                    <span class="n">pdcoors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">dcoors</span><span class="p">[</span><span class="n">dom</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">dcoors</span><span class="p">[</span><span class="n">dom</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">]))</span>
+                    <span class="n">domcolor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="n">cmap</span><span class="p">(</span><span class="n">indx</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="p">(</span><span class="n">indx</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="p">(</span><span class="n">indx</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cmap</span><span class="p">(</span><span class="n">indx</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="c1">#feature for domain name</span>
+                    <span class="n">feature</span> <span class="o">=</span> <span class="n">SeqFeature</span><span class="p">(</span><span class="n">FeatureLocation</span><span class="p">(</span><span class="n">pdcoors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pdcoors</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">strand</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">null</span> <span class="o">=</span> <span class="n">gds_features</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">dom</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> 
+                                                    <span class="n">sigil</span><span class="o">=</span><span class="s1">&#39;BOX&#39;</span><span class="p">,</span> <span class="n">label_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                                                    <span class="n">label_angle</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label_position</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> 
+                                                    <span class="n">label_color</span><span class="o">=</span><span class="n">domcolor</span><span class="p">)</span>
+                    <span class="c1">#</span>
+                    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pdcoors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pdcoors</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">if</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">dcoors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                            <span class="n">feature</span> <span class="o">=</span> <span class="n">SeqFeature</span><span class="p">(</span><span class="n">FeatureLocation</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">strand</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="n">null</span> <span class="o">=</span> <span class="n">gds_features</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                                                            <span class="n">color</span><span class="o">=</span><span class="n">domcolor</span><span class="p">,</span> <span class="n">sigil</span><span class="o">=</span><span class="s1">&#39;BOX&#39;</span><span class="p">,</span>
+                                                            <span class="n">label_size</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">pos</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dcoors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                            <span class="n">feature</span> <span class="o">=</span> <span class="n">SeqFeature</span><span class="p">(</span><span class="n">FeatureLocation</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">strand</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="n">null</span> <span class="o">=</span> <span class="n">gds_features</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                                            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sigil</span><span class="o">=</span><span class="s1">&#39;BOX&#39;</span><span class="p">,</span>
+                                                            <span class="n">label_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label_strand</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> 
+                                                            <span class="n">label_color</span><span class="o">=</span><span class="n">domcolor</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="c1">#SNP positions</span>
+                <span class="n">snpimpact</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">_snpimpact</span>
+                <span class="n">gdt_features</span> <span class="o">=</span> <span class="n">gdd</span><span class="o">.</span><span class="n">new_track</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">greytrack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SNPs&#39;</span><span class="p">,</span> <span class="n">greytrack_labels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                                             <span class="n">greytrack_font_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                                            <span class="n">greytrack_fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                                            <span class="n">scale</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale_largetick_interval</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+                                             <span class="n">scale_smalltick_interval</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="n">gds_features</span> <span class="o">=</span> <span class="n">gdt_features</span><span class="o">.</span><span class="n">new_set</span><span class="p">()</span>
+                <span class="c1">#</span>
+                <span class="k">for</span> <span class="n">snp</span> <span class="ow">in</span> <span class="n">dvarss</span><span class="p">:</span>
+                    <span class="n">snpcolor</span> <span class="o">=</span> <span class="n">snpimpact</span><span class="p">[</span><span class="n">dsnpsann</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">snp</span><span class="p">,</span> 
+                                        <span class="p">{</span><span class="s1">&#39;Annotation_Impact&#39;</span><span class="p">:</span> <span class="s1">&#39;NOANN&#39;</span><span class="p">})</span>
+                                         <span class="p">[</span><span class="s1">&#39;Annotation_Impact&#39;</span><span class="p">]]</span>
+                    <span class="n">feature</span> <span class="o">=</span> <span class="n">SeqFeature</span><span class="p">(</span><span class="n">FeatureLocation</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">snp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> 
+                                                         <span class="nb">int</span><span class="p">(</span><span class="n">snp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">strand</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">null</span> <span class="o">=</span> <span class="n">gds_features</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">dvarss</span><span class="p">[</span><span class="n">snp</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                                    <span class="n">color</span><span class="o">=</span><span class="n">snpcolor</span><span class="p">,</span> <span class="n">sigil</span><span class="o">=</span><span class="s1">&#39;OCTO&#39;</span><span class="p">,</span> <span class="n">label_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
+                                                    <span class="n">label_angle</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">label_position</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> 
+                                                    <span class="n">label_color</span><span class="o">=</span><span class="n">snpcolor</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="n">gdd</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span> <span class="n">fragments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                         <span class="n">start</span><span class="o">=</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">db</span><span class="p">[</span><span class="n">mrna</span><span class="p">]</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+                <span class="c1">#</span>
+                <span class="n">gdd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;geneplot.&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s2">&quot;png&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span></div></div></div>
+
+
+
+                
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Daniel Gonzalez-Ibeas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
