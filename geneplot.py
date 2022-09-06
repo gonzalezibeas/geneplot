@@ -1,5 +1,18 @@
 #!/usr/bin/env python
 
+import os
+import gffutils
+import subprocess
+from reportlab.lib import colors
+from reportlab.lib.units import cm
+from reportlab.lib.colors import Color
+from Bio.Graphics import GenomeDiagram
+from Bio.SeqFeature import SeqFeature, FeatureLocation
+from Bio.Graphics.GenomeDiagram import CrossLink
+
+import matplotlib.pyplot as pl
+
+import logging
 
 
 logfile = 'geneplot.all.err.log'
