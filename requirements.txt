@@ -2,6 +2,7 @@ gffutils==0.10.1
 Biopython==1.79
 reportlab==3.5.34
 matplotlib==3.4.1
+setuptools==45.2.0
 
 sphinx
 
