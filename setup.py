@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     version='1.0',
     description='Plot gene intron/exon topology, protein domains and SNPs',
-    long_description=long_description # here the README file goes
+    long_description=long_description, # here the README file goes
     long_description_content_type="text/markdown",
     url="https://",
     author='Daniel',
