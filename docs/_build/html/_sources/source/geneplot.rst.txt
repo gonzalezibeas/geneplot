@@ -1,4 +1,4 @@
-geneplot module
+geneplot
 ========================
 
 .. automodule:: geneplot

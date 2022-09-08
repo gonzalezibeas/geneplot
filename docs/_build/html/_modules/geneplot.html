@@ -36,10 +36,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../source/geneplot.html">geneplot module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../source/modules.html">docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/modules.html">Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html">geneplot tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html#example-1">Example 1.</a></li>
 </ul>
 
         </div>
@@ -159,7 +157,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="s1">&#39; gene class initialized&#39;</span><span class="p">)</span>
 
 
-        <span class="k">def</span> <span class="nf">_transcriptpos_to_genomepos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="genome.gene.transcriptpos_to_genomepos"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene.transcriptpos_to_genomepos">[docs]</a>        <span class="k">def</span> <span class="nf">transcriptpos_to_genomepos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">            Calculates genome coordinates for every nucleotide position</span>
 <span class="sd">            of the transcript according to the GFF3 and FASTA</span>
@@ -185,9 +183,9 @@
                 <span class="k">return</span> <span class="n">dcoors</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="k">raise</span>
+                <span class="k">raise</span></div>
 
-        <span class="k">def</span> <span class="nf">_proteindoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprfile</span><span class="p">,</span> <span class="n">proteinid</span><span class="p">):</span>
+<div class="viewcode-block" id="genome.gene.proteindoms"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene.proteindoms">[docs]</a>        <span class="k">def</span> <span class="nf">proteindoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iprfile</span><span class="p">,</span> <span class="n">proteinid</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">            Builds a dictionary from the InterproScan file provided as input of the</span>
 <span class="sd">            class &quot;gene&quot;.</span>
@@ -216,10 +214,10 @@
                 <span class="k">return</span> <span class="n">doms</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="k">raise</span>
+                <span class="k">raise</span></div>
 
 
-        <span class="k">def</span> <span class="nf">_getsnppos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">vcffiles</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="genome.gene.getsnppos"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene.getsnppos">[docs]</a>        <span class="k">def</span> <span class="nf">getsnppos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">vcffiles</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">            Selects SNP data overlapping with genome coordinates</span>
 <span class="sd">            of the gene ID (class object) from a VCF file whose sample ID matches</span>
@@ -358,7 +356,7 @@
                 <span class="k">pass</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="k">raise</span>
+                <span class="k">raise</span></div>
 
 
 <div class="viewcode-block" id="genome.gene.plot"><a class="viewcode-back" href="../source/geneplot.html#geneplot.genome.gene.plot">[docs]</a>        <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domtype</span><span class="o">=</span><span class="s1">&#39;Pfam&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

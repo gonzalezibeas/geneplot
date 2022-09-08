@@ -90,7 +90,7 @@ class genome(object):
             logger.info(self.id + ' gene class initialized')
 
 
-        def _transcriptpos_to_genomepos(self):
+        def transcriptpos_to_genomepos(self):
             '''
             Calculates genome coordinates for every nucleotide position
             of the transcript according to the GFF3 and FASTA
@@ -118,7 +118,7 @@ class genome(object):
                 logger.error(e)
                 raise
 
-        def _proteindoms(self, iprfile, proteinid):
+        def proteindoms(self, iprfile, proteinid):
             '''
             Builds a dictionary from the InterproScan file provided as input of the
             class "gene".
@@ -150,7 +150,7 @@ class genome(object):
                 raise
 
 
-        def _getsnppos(self, sp, vcffiles, onlycoding=True):
+        def getsnppos(self, sp, vcffiles, onlycoding=True):
             '''
             Selects SNP data overlapping with genome coordinates
             of the gene ID (class object) from a VCF file whose sample ID matches

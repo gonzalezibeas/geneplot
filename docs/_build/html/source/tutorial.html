@@ -18,7 +18,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="docs" href="modules.html" /> 
+    <link rel="prev" title="geneplot" href="geneplot.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,10 +38,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="geneplot.html">geneplot module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">docs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">geneplot tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#example-1">Example 1.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">geneplot tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-1">Example 1.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-2">Example 2.</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -70,9 +72,12 @@
              
   <section id="geneplot-tutorial">
 <h1>geneplot tutorial<a class="headerlink" href="#geneplot-tutorial" title="Permalink to this headline"></a></h1>
-<p>This document describes an example of usage of the Python geneplot library. Input data are located in the “tests” folder of the source code at GitHub, including:</p>
-<p>1- (optional) An VCF file with polymorphisms identified on the genome of Drosophila melanogaster, downloaded from <a class="reference external" href="https://doi.org/10.5281/zenodo.51693">https://doi.org/10.5281/zenodo.51693</a>.</p>
-<p>Verify that the input VCF file complies with standard specifications (<a class="reference external" href="https://github.com/samtools/hts-specs">https://github.com/samtools/hts-specs</a>). There are several file verifiers available elsewhere.
+<div class="toctree-wrapper compound">
+</div>
+<p>This document describes an example of usage of the Python geneplot library. Input data are located in the “tests” folder of the source code at GitHub. File types include:</p>
+<p>1- (mandatory) A GFF file (version v.3) of the annotation of the genome. Verify that the file complies with the <a class="reference external" href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">GFF3</a> standard specifications. GFF3 validation tools are available at modENCODE-DCC, <a class="reference external" href="https://github.com/modENCODE-DCC/validator">here</a>.</p>
+<p>2- (optional) A VCF file with polymorphisms previously identified, for example with GATK.</p>
+<p>Verify that the input <a class="reference external" href="https://github.com/samtools/hts-specs">VCF file</a> complies with standard specifications. There are several file <a class="reference external" href="https://github.com/EBIvariation/vcf-validator">verifiers</a> available elsewhere.
 The name of the sample on the VCF file must be set accordingly, i.e., at the end of the header line which describes the names of the columns of the VCF file, typically the last one.
 See the “w79_w11182w79_UPD” sample name in the next figure of the example data:</p>
 <div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>##fileformat=VCFv4.1
@@ -89,39 +94,64 @@ See the “w79_w11182w79_UPD” sample name in the next figure of the example da
 </pre></div>
 </div>
 <p>Currently, only single-sample VCF files are accepted by the geneplot library. If you have a multi-sample VCF, you split it with VCFtools or BCFtools.</p>
-<p>2- (mandatory) A GFF file (version v.3) of the annotation of the genome. Verify that the file complies with the standard specifications (<a class="reference external" href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md</a>).
-GFF3 validation tools are available at modENCODE-DCC (<a class="reference external" href="https://github.com/modENCODE-DCC/validator">https://github.com/modENCODE-DCC/validator</a>).</p>
 <p>3- (optional) The output file of InterproScan, which identifies several protein signatures on protein sequence data, in TSV format.</p>
-</section>
 <section id="example-1">
-<h1>Example 1.<a class="headerlink" href="#example-1" title="Permalink to this headline"></a></h1>
-<p>We are going to plot protein domains and SNP data on one ARGONAUTE gene (ID FBpp0086739) of the fruit fly. According to the GFF3 file, the gene has associated the protein ID FBpp0086739.
-We first instantiate a gene object by using these data as parameters of the gene() class of the library, as well as the path were VCF files are located.
-Next, we set the sample ID with the SNPs we want to plot and the protein signature database to be used as parameters of the plot() method of the gene object we have created.</p>
+<h2>Example 1.<a class="headerlink" href="#example-1" title="Permalink to this headline"></a></h2>
+<p>We are going to plot protein domains and SNP data on one ARGONAUTE gene (ID gene:FBgn0262739, trancript ID transcript:FBtr0087613) of the fruit fly (Drosophila melanogaster). According to the GFF3 file, the gene has associated the protein ID FBpp0086739.
+We first instantiate a genome object by using the paths of the GFF3, InterproScan output and VCF files as parameters of the genome() class of the library.
+The sample VCF file has been downloaded from https://doi.org/10.5281/zenodo.51693.
+Next, we instantiate a gene object with the gene() class of the genome object previously created, using the sample ID of the SNPs we want to plot and the protein signature database to be used as parameters of the plot() method of the gene object.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geneplot</span> <span class="k">as</span> <span class="nn">gp</span>
 
-<span class="c1">#input data</span>
-<span class="n">filegff</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/file.gff&#39;</span>
-<span class="n">fileipr</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/file.ipr&#39;</span>
-<span class="n">filevcf</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/vcfs/&#39;</span>
+<span class="c1">#input data Drosophila genome</span>
+<span class="n">filegff</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/fruit_fly.gff3&#39;</span>
+<span class="n">iprfile</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/fruit_fly.ipr&#39;</span>
+<span class="n">vcffiles</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/&#39;</span>
+
+<span class="c1"># class instantiation (genome object)</span>
+<span class="n">genome_1</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">genome</span><span class="p">(</span><span class="n">filegff</span><span class="p">,</span> <span class="n">iprfile</span><span class="o">=</span><span class="n">iprfile</span><span class="p">,</span> <span class="n">vcffiles</span><span class="o">=</span><span class="n">vcffiles</span><span class="p">)</span>
 
 <span class="c1"># class instantiation (gene object)</span>
-<span class="n">gene1</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">gene</span><span class="p">(</span><span class="s1">&#39;geneID&#39;</span><span class="p">,</span> <span class="s1">&#39;proteinID&#39;</span><span class="p">,</span> <span class="n">filegff</span><span class="p">,</span> <span class="n">fileipr</span><span class="p">,</span> <span class="n">filevcf</span><span class="p">)</span>
+<span class="n">gene_1</span> <span class="o">=</span> <span class="n">genome_1</span><span class="o">.</span><span class="n">gene</span><span class="p">(</span><span class="n">mRNAid</span><span class="o">=</span><span class="s1">&#39;transcript:FBtr0087613&#39;</span><span class="p">,</span> <span class="n">proteinid</span><span class="o">=</span><span class="s1">&#39;FBpp0086739&#39;</span><span class="p">)</span>
 
 <span class="c1"># plot</span>
-<span class="n">gene1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;sample_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Pfam&#39;</span><span class="p">)</span>
+<span class="n">gene_1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;Pfam&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="o">=</span><span class="s1">&#39;w79_w11182w79_UPD&#39;</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The method uses Pfam database as default. After the first plotting, a list of available database signatures for that gene is printed, in case additional plots are desired. This is the Output image of the example:</p>
-<img alt="Alternative text" src="../_images/geneplot.ex.1.png" />
+<img alt="ARGONAUTE gene FBpp0086739" src="../_images/geneplot.ex.1.png" />
 <p>Since SNPEff annotation is not provided in the VCF file for this sample, SNPs are plotted in black color.</p>
+</section>
+<section id="example-2">
+<h2>Example 2.<a class="headerlink" href="#example-2" title="Permalink to this headline"></a></h2>
+<p>We are going to plot protein domains and SNP data on one Pectin lyase-like gene of citrus (ID Ciclev10019941m.g.v1.0, trancript Ciclev10019941m.v1.0). According to the GFF3 file, the gene has associated the protein ID Ciclev10019941m.
+WE follow the same method, but in this case we only want to plot SNPs on coding areas of the gene, and they will be colored since SNPEff annotation is provided in the VCF file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geneplot</span> <span class="k">as</span> <span class="nn">gp</span>
+
+<span class="c1">#input data Citrus genome</span>
+<span class="n">filegff</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/citrus.gff3&#39;</span>
+<span class="n">iprfile</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/citrus.ipr&#39;</span>
+<span class="n">vcffiles</span> <span class="o">=</span> <span class="s1">&#39;/path-to-data/geneplot/tests/&#39;</span>
+
+<span class="c1"># class instantiation (genome object)</span>
+<span class="n">genome_2</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">genome</span><span class="p">(</span><span class="n">filegff</span><span class="p">,</span> <span class="n">iprfile</span><span class="o">=</span><span class="n">iprfile</span><span class="p">,</span> <span class="n">vcffiles</span><span class="o">=</span><span class="n">vcffiles</span><span class="p">)</span>
+
+<span class="c1"># class instantiation (gene object)</span>
+<span class="n">gene_2</span> <span class="o">=</span> <span class="n">genome_2</span><span class="o">.</span><span class="n">gene</span><span class="p">(</span><span class="n">mRNAid</span><span class="o">=</span><span class="s1">&#39;Ciclev10019941m.v1.0&#39;</span><span class="p">,</span> <span class="n">proteinid</span><span class="o">=</span><span class="s1">&#39;Ciclev10019941m&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">gene_2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;Pfam&#39;</span><span class="p">,</span> <span class="n">sp</span><span class="o">=</span><span class="s1">&#39;ivia_000&#39;</span><span class="p">,</span> <span class="n">onlycoding</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="ARGONAUTE gene FBpp0086739" src="../_images/geneplot.ex.2.png" />
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="docs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="geneplot.html" class="btn btn-neutral float-left" title="geneplot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

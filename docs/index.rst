@@ -10,7 +10,6 @@ Welcome to geneplot's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   source/geneplot
    source/modules
    source/tutorial
 
