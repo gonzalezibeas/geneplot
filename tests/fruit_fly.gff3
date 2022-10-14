@@ -1,0 +1,19 @@
+##gff-version 3
+2R	FlyBase	gene	13943387	13958089	.	-	.	ID=gene:FBgn0262739;Name=AGO1;biotype=protein_coding;gene_id=FBgn0262739;logic_name=flybase
+2R	FlyBase	mRNA	13947537	13955680	.	-	.	ID=transcript:FBtr0087613;Parent=gene:FBgn0262739;biotype=protein_coding;transcript_id=FBtr0087613
+2R	FlyBase	three_prime_UTR	13947537	13947971	.	-	.	Parent=transcript:FBtr0087613
+2R	FlyBase	exon	13947537	13948110	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E7;constitutive=0;ensembl_end_phase=-1;ensembl_phase=2;exon_id=FBtr0087613-E7;rank=7
+2R	FlyBase	CDS	13947972	13948110	.	-	1	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	exon	13948177	13949787	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E6;constitutive=1;ensembl_end_phase=2;ensembl_phase=2;exon_id=FBtr0087613-E6;rank=6
+2R	FlyBase	CDS	13948177	13949787	.	-	1	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	exon	13949850	13950072	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E5;constitutive=1;ensembl_end_phase=2;ensembl_phase=1;exon_id=FBtr0087613-E5;rank=5
+2R	FlyBase	CDS	13949850	13950072	.	-	2	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	exon	13950132	13950917	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E4;constitutive=1;ensembl_end_phase=1;ensembl_phase=1;exon_id=FBtr0087613-E4;rank=4
+2R	FlyBase	CDS	13950132	13950917	.	-	2	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	exon	13951614	13951688	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E3;constitutive=1;ensembl_end_phase=1;ensembl_phase=1;exon_id=FBtr0087613-E3;rank=3
+2R	FlyBase	CDS	13951614	13951688	.	-	2	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	CDS	13954687	13954807	.	-	0	ID=CDS:FBpp0086739;Parent=transcript:FBtr0087613;protein_id=FBpp0086739
+2R	FlyBase	exon	13954687	13954849	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E2;constitutive=0;ensembl_end_phase=1;ensembl_phase=-1;exon_id=FBtr0087613-E2;rank=2
+2R	FlyBase	five_prime_UTR	13954808	13954849	.	-	.	Parent=transcript:FBtr0087613
+2R	FlyBase	exon	13955632	13955680	.	-	.	Parent=transcript:FBtr0087613;Name=FBtr0087613-E1;constitutive=0;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=FBtr0087613-E1;rank=1
+2R	FlyBase	five_prime_UTR	13955632	13955680	.	-	.	Parent=transcript:FBtr0087613

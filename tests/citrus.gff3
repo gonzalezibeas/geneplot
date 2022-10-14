@@ -1,0 +1,11 @@
+##gff-version 3
+scaffold_3	phytozomev10	gene	1544509	1547621	.	-	.	ID=Ciclev10019941m.g.v1.0;Name=Ciclev10019941m.g
+scaffold_3	phytozomev10	mRNA	1544509	1547621	.	-	.	ID=Ciclev10019941m.v1.0;Name=Ciclev10019941m;Parent=Ciclev10019941m.g.v1.0;pacid=20806533;longest=1
+scaffold_3	phytozomev10	CDS	1547411	1547443	.	-	0	ID=Ciclev10019941m.v1.0.CDS.1;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	CDS	1546997	1547329	.	-	0	ID=Ciclev10019941m.v1.0.CDS.2;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	CDS	1546138	1546258	.	-	0	ID=Ciclev10019941m.v1.0.CDS.3;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	CDS	1545873	1546047	.	-	2	ID=Ciclev10019941m.v1.0.CDS.4;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	CDS	1545683	1545753	.	-	1	ID=Ciclev10019941m.v1.0.CDS.5;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	CDS	1544752	1545461	.	-	2	ID=Ciclev10019941m.v1.0.CDS.6;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	five_prime_UTR	1547444	1547621	.	-	.	ID=Ciclev10019941m.v1.0.five_prime_UTR.1;Parent=Ciclev10019941m.v1.0;pacid=20806533
+scaffold_3	phytozomev10	three_prime_UTR	1544509	1544751	.	-	.	ID=Ciclev10019941m.v1.0.three_prime_UTR.1;Parent=Ciclev10019941m.v1.0;pacid=20806533

@@ -1,0 +1,111 @@
+2022-08-25 20:06:26,108 INFO geneplot.geneplot  <module>  geneplot module initialized...
+2022-08-25 20:06:26,116 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-08-25 20:06:26,116 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-08-25 20:06:26,117 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-08-25 20:06:26,117 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-08-25 20:06:26,118 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+2022-08-25 20:06:26,233 INFO geneplot.geneplot  plot  geneplot starting...
+2022-08-25 20:06:26,233 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-08-25 20:06:26,234 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-08-25 20:06:26,234 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-08-25 20:06:26,234 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+2022-08-25 20:06:26,824 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-08-25 20:06:26,824 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-08-25 20:06:26,824 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+2022-08-25 20:06:26,936 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-08-25 20:06:26,936 INFO geneplot.geneplot  plot  geneplot starting...
+2022-08-25 20:06:26,936 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-08-25 20:06:26,937 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-08-25 20:06:26,937 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 1.00 seconds
+2022-08-25 20:06:27,109 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-08-25 20:06:27,109 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-08-25 20:06:27,109 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-08-25 20:06:27,109 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+2022-08-25 20:06:27,221 INFO geneplot.geneplot  plot  geneplot starting...
+2022-08-25 20:06:27,221 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-08-25 20:06:27,222 INFO geneplot.geneplot  _proteindoms  geneplot starting...
