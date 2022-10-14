@@ -1,79 +1,20 @@
-2022-08-25 20:06:26,108 INFO geneplot.geneplot  <module>  geneplot module initialized...
-2022-08-25 20:06:26,116 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
-2022-08-25 20:06:26,116 INFO geneplot.geneplot  _proteindoms  geneplot starting...
-2022-08-25 20:06:26,117 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
-2022-08-25 20:06:26,117 INFO geneplot.geneplot  _getsnppos  geneplot starting...
-2022-08-25 20:06:26,118 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+2022-10-14 21:12:12,927 INFO geneplot.geneplot  <module>  geneplot module initialized...
+2022-10-14 21:12:12,928 INFO geneplot.geneplot  __init__  geneplot  genome class initialized
+2022-10-14 21:12:12,930 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-10-14 21:12:12,930 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:12,930 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-10-14 21:12:12,931 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:12,931 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:12,959 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
 
 VCFtools - 0.1.17
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
-	--chr 2R
-	--to-bp 13955680
-	--recode-INFO-all
-	--recode
-	--from-bp 13947537
-	--stdout
-
-After filtering, kept 1 out of 1 Individuals
-Outputting VCF file...
-After filtering, kept 15 out of a possible 145583 Sites
-Run Time = 0.00 seconds
-2022-08-25 20:06:26,233 INFO geneplot.geneplot  plot  geneplot starting...
-2022-08-25 20:06:26,233 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
-2022-08-25 20:06:26,234 INFO geneplot.geneplot  _proteindoms  geneplot starting...
-2022-08-25 20:06:26,234 INFO geneplot.geneplot  _getsnppos  geneplot starting...
-2022-08-25 20:06:26,234 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
-
-VCFtools - 0.1.17
-(C) Adam Auton and Anthony Marcketta 2009
-
-Parameters as interpreted:
-	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
-	--chr 2R
-	--to-bp 13955680
-	--recode-INFO-all
-	--recode
-	--from-bp 13947537
-	--stdout
-
-After filtering, kept 1 out of 1 Individuals
-Outputting VCF file...
-After filtering, kept 15 out of a possible 145583 Sites
-Run Time = 0.00 seconds
-2022-08-25 20:06:26,824 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
-2022-08-25 20:06:26,824 INFO geneplot.geneplot  _getsnppos  geneplot starting...
-2022-08-25 20:06:26,824 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
-
-VCFtools - 0.1.17
-(C) Adam Auton and Anthony Marcketta 2009
-
-Parameters as interpreted:
-	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
-	--chr 2R
-	--to-bp 13955680
-	--recode-INFO-all
-	--recode
-	--from-bp 13947537
-	--stdout
-
-After filtering, kept 1 out of 1 Individuals
-Outputting VCF file...
-After filtering, kept 15 out of a possible 145583 Sites
-Run Time = 0.00 seconds
-2022-08-25 20:06:26,936 INFO geneplot.geneplot  _proteindoms  geneplot starting...
-2022-08-25 20:06:26,936 INFO geneplot.geneplot  plot  geneplot starting...
-2022-08-25 20:06:26,936 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
-2022-08-25 20:06:26,937 INFO geneplot.geneplot  _getsnppos  geneplot starting...
-2022-08-25 20:06:26,937 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
-
-VCFtools - 0.1.17
-(C) Adam Auton and Anthony Marcketta 2009
-
-Parameters as interpreted:
-	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--vcf ./fruit_fly.sample1.vcf
 	--chr 2R
 	--to-bp 13955680
 	--recode-INFO-all
@@ -85,16 +26,134 @@ After filtering, kept 1 out of 1 Individuals
 Outputting VCF file...
 After filtering, kept 15 out of a possible 145583 Sites
 Run Time = 1.00 seconds
-2022-08-25 20:06:27,109 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
-2022-08-25 20:06:27,109 INFO geneplot.geneplot  _proteindoms  geneplot starting...
-2022-08-25 20:06:27,109 INFO geneplot.geneplot  _getsnppos  geneplot starting...
-2022-08-25 20:06:27,109 DEBUG geneplot.geneplot  _getsnppos  geneplot w79_w11182w79_UPD.vcf
+2022-10-14 21:12:13,067 INFO geneplot.geneplot  plot  geneplot starting...
+2022-10-14 21:12:13,067 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-10-14 21:12:13,068 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:13,068 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:13,068 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:13,096 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
 
 VCFtools - 0.1.17
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--vcf /home/user01/data/genomes/droso/vcfs/w79_w11182w79_UPD.vcf
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13948110
+	--recode-INFO-all
+	--recode
+	--from-bp 13947972
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13949787
+	--recode-INFO-all
+	--recode
+	--from-bp 13948177
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 4 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13950072
+	--recode-INFO-all
+	--recode
+	--from-bp 13949850
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13950917
+	--recode-INFO-all
+	--recode
+	--from-bp 13950132
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 3 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13951688
+	--recode-INFO-all
+	--recode
+	--from-bp 13951614
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13954807
+	--recode-INFO-all
+	--recode
+	--from-bp 13954687
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+2022-10-14 21:12:14,066 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-10-14 21:12:14,067 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:14,067 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:14,096 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
 	--chr 2R
 	--to-bp 13955680
 	--recode-INFO-all
@@ -106,6 +165,169 @@ After filtering, kept 1 out of 1 Individuals
 Outputting VCF file...
 After filtering, kept 15 out of a possible 145583 Sites
 Run Time = 0.00 seconds
-2022-08-25 20:06:27,221 INFO geneplot.geneplot  plot  geneplot starting...
-2022-08-25 20:06:27,221 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
-2022-08-25 20:06:27,222 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:14,203 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:14,204 INFO geneplot.geneplot  plot  geneplot starting...
+2022-10-14 21:12:14,204 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-10-14 21:12:14,205 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:14,205 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:14,234 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13948110
+	--recode-INFO-all
+	--recode
+	--from-bp 13947972
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13949787
+	--recode-INFO-all
+	--recode
+	--from-bp 13948177
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 4 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13950072
+	--recode-INFO-all
+	--recode
+	--from-bp 13949850
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13950917
+	--recode-INFO-all
+	--recode
+	--from-bp 13950132
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 3 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13951688
+	--recode-INFO-all
+	--recode
+	--from-bp 13951614
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13954807
+	--recode-INFO-all
+	--recode
+	--from-bp 13954687
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 0 out of a possible 145583 Sites
+No data left for analysis!
+Run Time = 0.00 seconds
+2022-10-14 21:12:14,784 INFO geneplot.geneplot  __init__  geneplot transcript:FBtr0087613 gene class initialized
+2022-10-14 21:12:14,785 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:14,785 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:14,785 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:14,813 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 0.00 seconds
+2022-10-14 21:12:14,921 INFO geneplot.geneplot  plot  geneplot starting...
+2022-10-14 21:12:14,921 INFO geneplot.geneplot  _transcriptpos_to_genomepos  geneplot starting...
+2022-10-14 21:12:14,922 INFO geneplot.geneplot  _proteindoms  geneplot starting...
+2022-10-14 21:12:14,922 INFO geneplot.geneplot  _getsnppos  geneplot starting...
+2022-10-14 21:12:14,923 DEBUG geneplot.geneplot  _getsnppos  geneplot fruit_fly.sample1.vcf
+2022-10-14 21:12:14,951 DEBUG geneplot.geneplot  _getsnppos  geneplot citrus_sample1.vcf
+Leading or trailing space in attr_key-attr_value pairs is discouraged:
+	[Description] [Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ]
+	INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
+
+VCFtools - 0.1.17
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf ./fruit_fly.sample1.vcf
+	--chr 2R
+	--to-bp 13955680
+	--recode-INFO-all
+	--recode
+	--from-bp 13947537
+	--stdout
+
+After filtering, kept 1 out of 1 Individuals
+Outputting VCF file...
+After filtering, kept 15 out of a possible 145583 Sites
+Run Time = 1.00 seconds
