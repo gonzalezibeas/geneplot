@@ -1,0 +1,5 @@
+1- protein domains are not plotted because protein IDs don't match RNA IDs
+sol, change the ID of the ipr file, to set RNA ids
+or, supply the protein ID to the class
+
+
