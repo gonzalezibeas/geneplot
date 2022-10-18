@@ -60,7 +60,7 @@ The method uses Pfam database as default. After the first plotting, a list of av
 .. image:: geneplot.ex.1.png
    :alt: ARGONAUTE gene FBpp0086739
 
-Since SNPEff annotation is not provided in the VCF file for this sample, SNPs are plotted in black color.
+Track 0 (bottom) represents the exon-intron structure (exon=green, UTR=grey). Track 1 represents protein domains. Each domain ID is colored from a color loop sequence. Track 2 (top) represents polymorphism data. Since SNPEff annotation is not provided in the VCF file for this sample, SNPs are plotted in black color.
 
 
 Example 2.

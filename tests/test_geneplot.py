@@ -82,6 +82,6 @@ if __name__ == '__main__':
 
 
 ## to run the tests, -b to avoid printing messages
-## python -m unittest -v -b tests_geneplot.py
+## python -m unittest -v -b test_geneplot.py
 
 

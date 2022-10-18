@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="30mm"
+   viewBox="0 0 100 30"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="SNPEff_legend.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="197.21827"
+     inkscape:cy="176.19337"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1848"
+     inkscape:window-height="1016"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-267)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="8.6865377"
+       y="278.82434"
+       id="text12"><tspan
+         sodipodi:role="line"
+         x="8.6865377"
+         y="278.82434"
+         style="stroke-width:0.26458332"
+         id="tspan14">SNPEff legend</tspan></text>
+    <rect
+       style="opacity:1;fill:#009632;fill-opacity:1;stroke:none;stroke-width:0.27722052;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect18"
+       width="4.6591311"
+       height="4.6591311"
+       x="9.6259184"
+       y="282.44595"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="33.181938"
+       y="285.95215"
+       id="text830"><tspan
+         sodipodi:role="line"
+         id="tspan828"
+         x="33.181938"
+         y="285.95215"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.26458332">Modifier</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="16.230335"
+       y="285.89789"
+       id="text834"><tspan
+         sodipodi:role="line"
+         id="tspan832"
+         x="16.230335"
+         y="285.89789"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.26458332">Low</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="56.540733"
+       y="285.95215"
+       id="text838"><tspan
+         sodipodi:role="line"
+         id="tspan836"
+         x="56.540733"
+         y="285.95215"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.26458332">Moderate</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="82.75415"
+       y="285.61023"
+       id="text842"><tspan
+         sodipodi:role="line"
+         id="tspan840"
+         x="82.75415"
+         y="285.61023"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.26458332">High</tspan></text>
+    <rect
+       ry="0"
+       y="282.44595"
+       x="27.088436"
+       height="4.6591311"
+       width="4.6591311"
+       id="rect844"
+       style="opacity:1;fill:#cc9900;fill-opacity:1;stroke:none;stroke-width:0.27722052;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="opacity:1;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:0.27722052;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect846"
+       width="4.6591311"
+       height="4.6591311"
+       x="50.900955"
+       y="282.44595"
+       ry="0" />
+    <rect
+       ry="0"
+       y="282.44595"
+       x="76.300972"
+       height="4.6591311"
+       width="4.6591311"
+       id="rect848"
+       style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.27722052;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

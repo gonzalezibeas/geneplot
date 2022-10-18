@@ -11,11 +11,11 @@ setup(
     #packages=find_packages(include=['geneplot']),
     #packages=["geneplot"],
     include_package_data=True,
-    version='1.0',
+    version='1.2',
     description='Plot gene intron/exon topology, protein domains and SNPs',
     long_description=long_description, # here the README file goes
     long_description_content_type="text/markdown",
-    url="https://",
+    url="https://github.com/gonzalezibeas/geneplot",
     author='Daniel',
     author_email="danielglz@mailfence.com",
     license='GPL',
@@ -23,6 +23,11 @@ setup(
     #setup_requires=['pytest-runner'],
     #tests_require=['pytest==4.4.1'],
     #test_suite='tests',
+
+    #packages=find_packages(where="src"),
+    #package_dir={"": "src"},
+    #package_data={"mypkg": ["*.txt", "*.rst"]}
+
 
 )
 
