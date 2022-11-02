@@ -13,9 +13,9 @@ Format (VCF). For more details see:
 https://github.com/gonzalezibeas/geneplot
 
 ## Installation
-
+```
 pip install geneplot
-
+´´´
 ## Documentation
 
 https://geneplot.readthedocs.io/en/latest/#
@@ -40,7 +40,5 @@ gene_1 = genome_1.gene(mRNAid='transcriptID', proteinid='proteinID')
 
 # plot
 gene_1.plot('Pfam', sp='sampleID', onlycoding=True)
-
-´´´
 
 
