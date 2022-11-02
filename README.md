@@ -15,7 +15,7 @@ https://github.com/gonzalezibeas/geneplot
 ## Installation
 ```
 pip install geneplot
-´´´
+```
 ## Documentation
 
 https://geneplot.readthedocs.io/en/latest/#
