@@ -1,0 +1,9 @@
+gffutils
+Biopython
+reportlab
+matplotlib
+setuptools
+
+sphinx
+
+
