@@ -40,6 +40,6 @@ gene_1 = genome_1.gene(mRNAid='transcriptID', proteinid='proteinID')
 
 # plot
 gene_1.plot('Pfam', sp='sampleID', onlycoding=True)
-´´´
+
 
 
