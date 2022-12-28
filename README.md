@@ -6,7 +6,7 @@ input standard files and formats generated from  popular tools, including
 InterproScan, the General Feature Format v3 (GFF3) and the Variant Call 
 Format (VCF). For more details see:
 
-
+https://www.biorxiv.org/content/10.1101/2022.11.08.513416v1
 
 ## Code availability
 
@@ -15,7 +15,7 @@ https://github.com/gonzalezibeas/geneplot
 ## Installation
 ```
 pip install geneplot
-´´´
+```
 ## Documentation
 
 https://geneplot.readthedocs.io/en/latest/#
